@@ -16,12 +16,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
 	protected virtual void Start()
 	{
 		health = startingHealth;
-		IsActive = false;
-		IsDead = false;
 	}
 
 	public virtual void Initialize()
 	{
+		Debug.Log ("Initialized " + gameObject.name );
 		health = startingHealth;
 		IsActive = true;
 		IsDead = false;
