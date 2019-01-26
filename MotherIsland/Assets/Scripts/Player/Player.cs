@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent (typeof (WeaponController))]
 public class Player : LivingEntity
@@ -11,10 +13,13 @@ public class Player : LivingEntity
 	public Transform modelParent;
 	public GameObject prefab_PlayerModel;
 
+	[Header("Cross Hair Settings")]
+	public GameObject crossHair;
+	
 	// References
 	Camera mainCamera;
+	private Vector3 point = Vector3.zero;
 	WeaponController weaponController;
-
 	GameObject instantiatedPlayer;
 
 	#endregion
@@ -39,21 +44,25 @@ public class Player : LivingEntity
 		{
 			// Get aim/ look direction and pass the look point to the controller
 			Ray ray = mainCamera.ScreenPointToRay (Input.mousePosition);
+			point = Vector3.zero;
 			Plane groundPlane = new Plane (Vector3.up, Vector3.zero);
 			float rayDistance;
 
 			if (groundPlane.Raycast (ray, out rayDistance))
 			{
-				Vector3 point = ray.GetPoint (rayDistance);
-				point.y = transform.position.y;
-				transform.LookAt (point);
+				point = ray.GetPoint (rayDistance);
+				Vector3 mortarDirection = new Vector3(point.x,transform.position.y,point.z);
+				transform.LookAt (mortarDirection);
 			}
 
+			crossHair.transform.position = point+Vector3.up*3;
+			
 			// Trigger weapon to shoot
 			if (Input.GetMouseButton (0))
-				weaponController.Shoot ();
+				weaponController.Shoot (point);
 		}
 	}
+
 
 	#endregion
 
