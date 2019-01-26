@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -13,8 +11,7 @@ public class Weapon : MonoBehaviour
 	public float timeBetweenShots;	// in seconds
 	public float muzzleVelocity;
 
-	bool canShoot=true;
-	
+	bool canShoot = true;
 	//UI References
 	public Image loading;
 

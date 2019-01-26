@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class LookAtCamera : MonoBehaviour
 {
-
-    private GameObject camera;
+    private GameObject mainCamera;
     
     private void Awake()
     {
-        camera = Camera.main.gameObject;
+        mainCamera = Camera.main.gameObject;
     }
 
     private void Update()
     {
-        transform.LookAt(camera.transform.position);
+        transform.LookAt(mainCamera.transform.position);
     }
 }

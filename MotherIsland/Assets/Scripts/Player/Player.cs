@@ -51,12 +51,12 @@ public class Player : LivingEntity
 			if (groundPlane.Raycast (ray, out rayDistance))
 			{
 				point = ray.GetPoint (rayDistance);
-				Vector3 mortarDirection = new Vector3(point.x,transform.position.y,point.z);
+				Vector3 mortarDirection = new Vector3 (point.x, transform.position.y, point.z);
 				transform.LookAt (mortarDirection);
 			}
 
-			crossHair.transform.position = point+Vector3.up*3;
-			
+			crossHair.transform.position = point + (Vector3.up * 0.8f);
+
 			// Trigger weapon to shoot
 			if (Input.GetMouseButton (0))
 				weaponController.Shoot (point);
