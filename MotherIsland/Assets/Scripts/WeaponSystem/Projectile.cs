@@ -4,73 +4,72 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-	public LayerMask collisionMask;
-	float speed;
-	float damage = 1;
+    [Range(1.0f, 15.0f)] public float TargetRadius;
+    [Range(20.0f, 75.0f)] public float LaunchAngle;
+    [Range(0.0f, 10.0f)] public float TargetHeightOffsetFromGround;
+    public bool RandomizeHeightOffset;
 
-	float lifeTime = 2;
-	float collisionBufferDistance = 0.1f;
+    private bool bTargetReady;
+    private bool bTouchingGround;
 
-	#region Unity Methods
-	void Start()
-	{
-		Destroy (gameObject, lifeTime);
-
-		// bullet can spawn inside the enemy, so check for collisions
-		Collider [] initialCollisions = Physics.OverlapSphere (transform.position, 0.1f, collisionMask);
-		if(initialCollisions.Length > 0)
-		{
-			OnHitObject (initialCollisions [0]);
-		}
-	}
+    public Rigidbody rigid;
+    
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+    private Vector3 TargetObjectTF;
+    
+    
+    public void configureProjectile(Vector3 _targetPosition)
+    {
+        TargetObjectTF = _targetPosition;
+        bTargetReady = true;
+        bTouchingGround = false;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+        gameObject.SetActive(true);
+    }
 
 	void Update ()
-	{
-		// Collision detection
-		float moveDistance = speed * Time.deltaTime;
-		CheckCollisions (moveDistance);
-
-		// movement
-		transform.Translate (Vector3.forward * moveDistance);
+    {
+        if (bTargetReady)
+        {
+            Launch();
+        }
+         
+        if (!bTouchingGround && !bTargetReady)
+        {
+            transform.rotation = Quaternion.LookRotation(rigid.velocity) * initialRotation;
+        }
 	}
 
-	#endregion
+    void OnCollisionEnter()
+    {
+        bTouchingGround = true;
+        gameObject.SetActive(false);
+        Destroy(this.gameObject,1.5f);
+    }
 
-	#region Helper Methods
-	public void SetSpeed(float _speed)
-	{
-		speed = _speed;
-	}
 
-	void CheckCollisions(float moveDistance)
-	{
-		Ray ray = new Ray (transform.position, transform.forward);
-		RaycastHit hit;
-		
-		// both bullet and enemy are moving therefore adding buffer distance to collision detecction to compensate for enemy movement
-		if(Physics.Raycast(ray, out hit, moveDistance + collisionBufferDistance, collisionMask, QueryTriggerInteraction.Collide))
-		{
-			OnHitObject (hit);
-		}
-	}
+    void Launch()
+    {
+        Vector3 projectileXZPos = new Vector3(transform.position.x, 0.0f, transform.position.z);
+        Vector3 targetXZPos = new Vector3(TargetObjectTF.x, 0.0f, TargetObjectTF.z);
+        
+        transform.LookAt(targetXZPos);
 
-	void OnHitObject(RaycastHit hit)
-	{
-		IDamageable objectHit = hit.collider.GetComponent<IDamageable> ();
-		if (objectHit != null)
-			objectHit.TakeHit (damage, hit);
+        float R = Vector3.Distance(projectileXZPos, targetXZPos);
+        float G = Physics.gravity.y;
+        float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
+        float H = (TargetObjectTF.y) - transform.position.y;
 
-		Destroy (gameObject);
-	}
+        float Vz = Mathf.Sqrt(G * R * R / (2.0f * (H - R * tanAlpha)) );
+        float Vy = tanAlpha * Vz;
 
-	void OnHitObject(Collider collider)
-	{
-		IDamageable objectHit = collider.GetComponent<IDamageable> ();
-		if (objectHit != null)
-			objectHit.TakeDamage (damage);
+        Vector3 localVelocity = new Vector3(0f, Vy, Vz);
+        Vector3 globalVelocity = transform.TransformDirection(localVelocity);
 
-		Destroy (gameObject);
-	}
-
-	#endregion
+        rigid.velocity = globalVelocity;
+        bTargetReady = false;
+    }
+    
 }

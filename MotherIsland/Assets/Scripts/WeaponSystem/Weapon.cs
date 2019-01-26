@@ -1,25 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class Weapon : MonoBehaviour
 {
 	public Transform muzzle;
+	public Transform shootPoint;
 	public Projectile projectile;
 
 	public float timeBetweenShots;	// in seconds
 	public float muzzleVelocity;
 
-	float nextShotTime;
+	bool canShoot=true;
+	
+	//UI References
+	public Image loading;
 
-	public void Shoot()
+	public void Shoot(Vector3 _target)
 	{
-		if(Time.time >= nextShotTime)
+		if(canShoot)
 		{
-			nextShotTime = Time.time + timeBetweenShots;
+			canShoot = false;
 
-			Projectile instantiatedProjectile = Instantiate (projectile, muzzle.position, muzzle.rotation);
-			instantiatedProjectile.SetSpeed (muzzleVelocity);
+			loading.fillAmount = 0;
+			loading.color = Color.white;
+
+			loading.DOFillAmount(1f, timeBetweenShots).OnComplete(() =>
+			{
+				loading.DOColor(Color.green, timeBetweenShots).OnComplete(() =>
+				{
+					canShoot = true;
+				});
+			});
+
+			Projectile instantiatedProjectile = Instantiate (projectile, shootPoint.position, shootPoint.rotation);
+			instantiatedProjectile.configureProjectile(_target);
+			//instantiatedProjectile.SetSpeed (muzzleVelocity);
 		}
 	}
 
