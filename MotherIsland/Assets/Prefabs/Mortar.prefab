@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 4126928311232346}
   - component: {fileID: 33484036172423576}
   - component: {fileID: 23395579642233034}
+  - component: {fileID: 114526875709629680}
   m_Layer: 0
   m_Name: cannonMobile
   m_TagString: Untagged
@@ -511,3 +512,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 0}
   startignWeapon: {fileID: 0}
+--- !u!114 &114526875709629680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1976959320486624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234d524e566c43148bb30cbede49e242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzle: {fileID: 0}
+  projectile: {fileID: 0}
+  timeBetweenShots: 0
+  muzzleVelocity: 0
