@@ -43,6 +43,7 @@ public class Gamemanager : MonoBehaviour {
     private static Gamemanager manager;
     private int seconds;
     private States currentState;
+    private AudioSource audioSource;
     
     //Properties 
     public static Gamemanager Manager{get { return manager; }}
@@ -57,6 +58,7 @@ public class Gamemanager : MonoBehaviour {
         
         //Get References.
         buttonClickSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         
         //Configure Audio Source.
        ConfigureSound();
@@ -80,6 +82,7 @@ public class Gamemanager : MonoBehaviour {
         switch (gamestate)
         {
             case States.MAINMENU:
+                closeOpenMenus();
                 menus[(int)gamestate].gameObject.SetActive(true);
                 break;
             case States.GAMEPLAY:
@@ -95,6 +98,7 @@ public class Gamemanager : MonoBehaviour {
                 Time.timeScale = 0;
                 break;
             case States.GAMEOVER:
+                closeOpenMenus();
                 shipController.RemoveOnScreenShips();
                 menus[(int)gamestate].gameObject.SetActive(true);
                 sruvivedTime.text = TimeSpan.FromSeconds(seconds).ToString();
@@ -139,32 +143,37 @@ public class Gamemanager : MonoBehaviour {
 
     public void OnPlay()
     {
+        audioSource.PlayOneShot(buttonClickClip);
         TransitionGameState(States.GAMEPLAY);
     }
 
     public void OnSound()
     {
+        audioSource.PlayOneShot(buttonClickClip);
         PlayerPrefs.SetInt("Sound",PlayerPrefs.GetInt("Sound", 1) == 1 ? 0 : 1);
         ConfigureSound();
     }
 
     public void OnAbout()
     {
-       //TODO: Add credits. 
+        audioSource.PlayOneShot(buttonClickClip);
     }
 
     public void OnPause()
     {
+        audioSource.PlayOneShot(buttonClickClip);
         TransitionGameState(States.PAUSE);
     }
 
     public void OnRestart()
     {
+        audioSource.PlayOneShot(buttonClickClip);
         TransitionGameState(States.RESTART);
     }
 
     public void OnResume()
     {
+        audioSource.PlayOneShot(buttonClickClip);
         TransitionGameState(States.RESUME);
     }
 

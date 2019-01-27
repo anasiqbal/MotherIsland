@@ -36,8 +36,18 @@ public class ShipController : MonoBehaviour
 	WaypointsInfo pointInfo;
 
 	Vector3 targetHitPosition;
-
 	
+	//References
+	private AudioSource audioSource;
+
+	[Header("Audio Clips")] 
+	[SerializeField] private AudioClip shipSpawn;
+
+
+	private void Start()
+	{
+		audioSource = GetComponent<AudioSource>();
+	}
 
 	private void OnDisable()
 	{
@@ -81,6 +91,7 @@ public class ShipController : MonoBehaviour
 
 			Ship spawnedShip = Instantiate (shipPrefab, pointInfo.StartingPoint.position, Quaternion.identity, shipParent);
 			spawnedShip.Initialize (pointInfo, targetHitPosition);
+			audioSource.PlayOneShot(shipSpawn);
 			spawnedShip.OnDeath += SpawnedShip_OnDeath;
 
 			shuffledSpawnPoints.RemoveAt (waypointIndex);

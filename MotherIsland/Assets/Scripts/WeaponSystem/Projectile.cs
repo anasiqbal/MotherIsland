@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -11,14 +12,40 @@ public class Projectile : MonoBehaviour
 
 	public GameObject explosionParticle;
 
+	private AudioSource audioSource;
+
+	[Header("Particle System")] 
+	[SerializeField] private ParticleSystem waterSplash;
+	
+	[Header("Audio Settings")] 
+	[SerializeField]
+	[Range(-3, 1)] 
+	private float minRange;
+	[SerializeField]
+	[Range(-3, 1)] 
+	private float maxRange;
+	
+	[Header("Audio Clips")] 
+	[SerializeField]
+	private AudioClip cannonFire;
+	[SerializeField] 
+	private AudioClip generalHit;
+	[SerializeField] 
+	private AudioClip waterHit;
+	
+	
 	Rigidbody rb;
 
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody> ();
+		audioSource = GetComponent<AudioSource>();
+		
 	}
 	private void Start()
 	{
+		audioSource.pitch = Random.Range(minRange,maxRange+0.1f);
+		audioSource.PlayOneShot(cannonFire);
 		Destroy (gameObject, maxLifeTime);
 	}
 
@@ -32,13 +59,24 @@ public class Projectile : MonoBehaviour
 		IDamageable hitObject = other.gameObject.GetComponent<IDamageable> ();
 		if (hitObject != null)
 		{
+			GameObject soundSource = new GameObject("Sound Source");
+			AudioSource source = soundSource.AddComponent<AudioSource>();
+			source.PlayOneShot(generalHit);
+			Destroy(soundSource,3);
+			
 			hitObject.TakeDamage (damage);
-
 			GameObject go = Instantiate(explosionParticle, transform.position, transform.rotation);
 			Destroy(go, 2);
 		}
 		else if(other.CompareTag("Water"))
 		{
+			GameObject soundSource = new GameObject("Sound Source");
+			AudioSource source = soundSource.AddComponent<AudioSource>();
+			source.PlayOneShot(waterHit);
+			Destroy(soundSource,3);
+
+			GameObject splashParticle = Instantiate(waterSplash.gameObject, transform.position, transform.rotation);
+			Destroy(splashParticle,3);
 
 		}
 		else

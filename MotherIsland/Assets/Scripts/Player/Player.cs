@@ -23,6 +23,9 @@ public class Player : LivingEntity
 	[Header("Cross Hair Settings")]
 	public GameObject crossHair;
 
+	[Header("Audio Clips")] 
+	[SerializeField] private AudioClip structureDestroyed;
+
 	// References
 	Camera mainCamera;
 	private Vector3 point = Vector3.zero;
@@ -84,8 +87,13 @@ public class Player : LivingEntity
 			destroyEffect.SetActive(false);
 			Gamemanager.Manager.TransitionGameState(Gamemanager.States.GAMEOVER);
 		}).Play();
-
 		mainCamera.DOShakePosition(fortDestroyDuration, 0.5f, 40, fadeOut: false);
+		
+		//Sound Effect.
+		GameObject audio = new GameObject("Structure Destroyed Sound");
+		AudioSource source = audio.AddComponent<AudioSource>();
+		source.PlayOneShot(structureDestroyed);
+
 	}
 
 		#endregion
