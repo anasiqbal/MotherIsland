@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028468, g: 0.2257159, b: 0.3069234, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028529, g: 0.22571664, b: 0.3069246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 27188848}
   - component: {fileID: 27188847}
   m_Layer: 5
-  m_Name: About
+  m_Name: AboutViiew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2081,6 +2081,10 @@ Prefab:
       propertyPath: structureDestroyed
       value: 
       objectReference: {fileID: 8300000, guid: cd79c7db375064e2ea7eb7e2c94d5334, type: 3}
+    - target: {fileID: 4606329141446242, guid: 613c316f5d2138d43b898868d42d2eb5, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 613c316f5d2138d43b898868d42d2eb5, type: 2}
   m_IsPrefabAsset: 0

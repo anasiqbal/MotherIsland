@@ -33,6 +33,7 @@ public class Gamemanager : MonoBehaviour {
 	[SerializeField] private Image soundIcon;
 	[SerializeField] private Text time;
 	[SerializeField] private Text sruvivedTime;
+	[SerializeField] private GameObject creditsWindow;
 
 	[Header("Icons")] 
 	[SerializeField] private Sprite[] soundIcons;
@@ -154,6 +155,7 @@ public class Gamemanager : MonoBehaviour {
 	public void OnAbout()
 	{
 		audioSource.PlayOneShot(buttonClickClip);
+		creditsWindow.gameObject.SetActive(true);
 	}
 
 	public void OnPause()
@@ -174,6 +176,12 @@ public class Gamemanager : MonoBehaviour {
 		TransitionGameState(States.RESUME);
 	}
 
-	#endregion
+	public void OnCredits()
+	{
+		creditsWindow.gameObject.SetActive(false);
+	}
 	
+
+	#endregion
+
 }
