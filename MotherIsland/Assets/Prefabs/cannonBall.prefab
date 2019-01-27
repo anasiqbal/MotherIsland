@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114015977889240264}
   - component: {fileID: 54461310615773286}
   m_Layer: 0
-  m_Name: CannonBall
+  m_Name: cannonBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ Transform:
   m_GameObject: {fileID: 1097306880309634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.25, y: 3.25, z: 3.25}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 4456208261844462}
   m_RootOrder: 0
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944197648882306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.38, y: 4.57, z: -14.94}
+  m_LocalPosition: {x: 0.182, y: 8.04, z: 1.319}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4104637357804094}
@@ -124,7 +124,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -141,11 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19fbcb305832774468f8ea9bc13e508a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetRadius: 1
-  LaunchAngle: 45
-  TargetHeightOffsetFromGround: 0.1
-  RandomizeHeightOffset: 0
-  rigid: {fileID: 54461310615773286}
+  maxLifeTime: 6
 --- !u!135 &135729828763546918
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -153,8 +149,8 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944197648882306}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.23
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}

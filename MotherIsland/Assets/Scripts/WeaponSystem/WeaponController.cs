@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
 	//public Transform weaponHold;
 	//public Weapon startingWeapon;
 	public Weapon equipedWeapon;
+	public float muzzleVelocity;
 
 	#endregion
 

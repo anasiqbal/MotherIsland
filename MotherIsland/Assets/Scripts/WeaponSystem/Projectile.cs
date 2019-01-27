@@ -2,74 +2,87 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    [Range(1.0f, 15.0f)] public float TargetRadius;
-    [Range(20.0f, 75.0f)] public float LaunchAngle;
-    [Range(0.0f, 10.0f)] public float TargetHeightOffsetFromGround;
-    public bool RandomizeHeightOffset;
+	public float damage = 5;
 
-    private bool bTargetReady;
-    private bool bTouchingGround;
+	public float maxLifeTime = 6;
+	Rigidbody rb;
 
-    public Rigidbody rigid;
-    
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    private Vector3 TargetObjectTF;
-    
-    
-    public void configureProjectile(Vector3 _targetPosition)
-    {
-        TargetObjectTF = _targetPosition;
-        bTargetReady = true;
-        bTouchingGround = false;
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
-        gameObject.SetActive(true);
-    }
-
-	void Update ()
-    {
-        if (bTargetReady)
-        {
-            Launch();
-        }
-         
-        if (!bTouchingGround && !bTargetReady)
-        {
-            transform.rotation = Quaternion.LookRotation(rigid.velocity) * initialRotation;
-        }
+	private void Awake()
+	{
+		rb = GetComponent<Rigidbody> ();
+	}
+	private void Start()
+	{
+		Destroy (gameObject, maxLifeTime);
 	}
 
-    void OnCollisionEnter()
-    {
-        bTouchingGround = true;
-        gameObject.SetActive(false);
-        Destroy(this.gameObject,1.5f);
-    }
+	public void ApplyForce(Vector3 force)
+	{
+		rb.AddForce (force, ForceMode.VelocityChange);
+	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		IDamageable hitObject = other.gameObject.GetComponent<IDamageable> ();
+		if (hitObject != null)
+		{
+			hitObject.TakeDamage (damage);
+		}
 
-    void Launch()
-    {
-        Vector3 projectileXZPos = new Vector3(transform.position.x, 0.0f, transform.position.z);
-        Vector3 targetXZPos = new Vector3(TargetObjectTF.x, 0.0f, TargetObjectTF.z);
-        
-        transform.LookAt(targetXZPos);
+		Destroy (gameObject);
+	}
 
-        float R = Vector3.Distance(projectileXZPos, targetXZPos);
-        float G = Physics.gravity.y;
-        float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
-        float H = (TargetObjectTF.y) - transform.position.y;
+	//public void configureProjectile(Vector3 _targetPosition)
+	//{
+	//	targetPosition = _targetPosition;
+	//	bTargetReady = true;
+	//	bTouchingGround = false;
+	//	initialPosition = transform.position;
+	//	initialRotation = transform.rotation;
+	//	gameObject.SetActive(true);
+	//}
 
-        float Vz = Mathf.Sqrt(G * R * R / (2.0f * (H - R * tanAlpha)) );
-        float Vy = tanAlpha * Vz;
+	//void Update ()
+	//{
+	//	if (bTargetReady)
+	//	{
+	//		Launch();
+	//	}
 
-        Vector3 localVelocity = new Vector3(0f, Vy, Vz);
-        Vector3 globalVelocity = transform.TransformDirection(localVelocity);
+	//	if (!bTouchingGround && !bTargetReady)
+	//	{
+	//		transform.rotation = Quaternion.LookRotation(rigid.velocity) * initialRotation;
+	//	}
+	//}
+	//private void OnCollisionEnter(Collision collision)
+	//{
+	//	bTouchingGround = true;
+	//	gameObject.SetActive(false);
+	//	Destroy(this.gameObject,1.5f);
+	//}
 
-        rigid.velocity = globalVelocity;
-        bTargetReady = false;
-    }
-    
+	//void Launch()
+	//{
+	//	Vector3 projectileXZPos = new Vector3(transform.position.x, 0.0f, transform.position.z);
+	//	Vector3 targetXZPos = new Vector3(targetPosition.x, 0.0f, targetPosition.z);
+
+	//	transform.LookAt(targetXZPos);
+
+	//	float R = Vector3.Distance(projectileXZPos, targetXZPos);
+	//	float G = Physics.gravity.y;
+	//	float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
+	//	float H = (targetPosition.y) - transform.position.y;
+
+	//	float Vz = Mathf.Sqrt(G * R * R / (2.0f * (H - R * tanAlpha)) );
+	//	float Vy = tanAlpha * Vz;
+
+	//	Vector3 localVelocity = new Vector3(0f, Vy, Vz);
+	//	Vector3 globalVelocity = transform.TransformDirection(localVelocity);
+
+	//	rigid.velocity = globalVelocity;
+	//	bTargetReady = false;
+	//}
 }

@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 4166394440512936}
   - component: {fileID: 114071977057630778}
   - component: {fileID: 114887345672035008}
+  - component: {fileID: 136639902523787272}
   m_Layer: 0
   m_Name: Mortar
   m_TagString: Untagged
@@ -526,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipedWeapon: {fileID: 114838238039668674}
+  muzzleVelocity: 0
 --- !u!114 &114838238039668674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,11 +540,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzle: {fileID: 4077293204918818}
-  shootPoint: {fileID: 4077293204918818}
   projectile: {fileID: 114015977889240264, guid: 69c28d0f29322924c86e487813862e94,
     type: 2}
   timeBetweenShots: 1
-  muzzleVelocity: 10
+  muzzleVelocity: 20
+  projectilePath: 1
   loading: {fileID: 0}
 --- !u!114 &114887345672035008
 MonoBehaviour:
@@ -559,3 +561,16 @@ MonoBehaviour:
   modelParent: {fileID: 0}
   prefab_PlayerModel: {fileID: 1666486153959574}
   crossHair: {fileID: 0}
+--- !u!136 &136639902523787272
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481206076992340}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: -1.3, z: 0}

@@ -15,6 +15,8 @@ public struct WaypointsInfo
 
 public class ShipController : MonoBehaviour
 {
+	public Transform target;
+
 	public Transform shipParent;
 	public Ship shipPrefab;
 
@@ -24,10 +26,14 @@ public class ShipController : MonoBehaviour
 	public int maxPointSelectionIndex;
 	public List<WaypointsInfo> spawnPoints;
 
+	public event System.Action OnShipDestroyed;
+
 	List<WaypointsInfo> shuffledSpawnPoints;
 
 	bool isActive;
 	WaypointsInfo pointInfo;
+
+	Vector3 targetHitPosition;
 
 	private void Start()
 	{
@@ -43,6 +49,7 @@ public class ShipController : MonoBehaviour
 	public void Initialize()
 	{
 		isActive = true;
+		targetHitPosition = target.position + (Vector3.up * 2);
 		StartCoroutine (SpawnShip ());
 	}
 
@@ -59,12 +66,19 @@ public class ShipController : MonoBehaviour
 			pointInfo = shuffledSpawnPoints [waypointIndex];
 
 			Ship spawnedShip = Instantiate (shipPrefab, pointInfo.StartingPoint.position, Quaternion.identity, shipParent);
-			spawnedShip.Initialize (pointInfo);
+			spawnedShip.Initialize (pointInfo, targetHitPosition);
+			spawnedShip.OnDeath += SpawnedShip_OnDeath;
 
 			shuffledSpawnPoints.RemoveAt (waypointIndex);
 			shuffledSpawnPoints.Add (pointInfo);
 
 			yield return new WaitForSeconds (shipSpawnDelay);
 		}
+	}
+
+	private void SpawnedShip_OnDeath()
+	{
+		if (OnShipDestroyed != null)
+			OnShipDestroyed ();
 	}
 }

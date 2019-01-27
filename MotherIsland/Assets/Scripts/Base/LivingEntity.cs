@@ -20,7 +20,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
 	public virtual void Initialize()
 	{
-		Debug.Log ("Initialized " + gameObject.name );
 		health = startingHealth;
 		IsActive = true;
 		IsDead = false;
@@ -35,7 +34,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
 	public virtual void TakeDamage(float damage)
 	{
 		health -= damage;
-
 		if (health <= 0 && !IsDead)
 		{
 			Die ();
