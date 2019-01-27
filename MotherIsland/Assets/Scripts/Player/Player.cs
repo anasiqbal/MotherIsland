@@ -82,6 +82,7 @@ public class Player : LivingEntity
 		tower.DOMoveY(-6, fortDestroyDuration).SetAutoKill(true).OnComplete(() =>
 		{
 			destroyEffect.SetActive(false);
+			Gamemanager.Manager.TransitionGameState(Gamemanager.States.GAMEOVER);
 		}).Play();
 
 		mainCamera.DOShakePosition(fortDestroyDuration, 0.5f, 40, fadeOut: false);
