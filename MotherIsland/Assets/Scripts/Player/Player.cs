@@ -31,12 +31,9 @@ public class Player : LivingEntity
 
 		mainCamera = Camera.main;
 		weaponController = GetComponent<WeaponController> ();
-
 		//SetupPlayerModel ();
-
-		IsDead = false;
-		IsActive = true;
 	}
+	
 
 	void Update()
 	{
@@ -65,12 +62,8 @@ public class Player : LivingEntity
 
 
 	#endregion
-
+	
 	#region Inherited Methods
-	public override void Initialize()
-	{
-		base.Initialize ();
-	}
 
 	protected override void Die()
 	{
@@ -81,6 +74,7 @@ public class Player : LivingEntity
 	#endregion
 
 	#region Helper Methods
+	
 	void SetupPlayerModel()
 	{
 		instantiatedPlayer = Instantiate (prefab_PlayerModel, modelParent);

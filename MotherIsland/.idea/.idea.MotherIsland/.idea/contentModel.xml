@@ -29,6 +29,12 @@
             <e p="IDamageable.cs" t="Include" />
             <e p="LivingEntity.cs" t="Include" />
           </e>
+          <e p="Manager" t="Include">
+            <e p="Gamemanager.cs" t="Include" />
+          </e>
+          <e p="Menu" t="Include">
+            <e p="MainMenu.cs" t="Include" />
+          </e>
           <e p="Player" t="Include">
             <e p="Player.cs" t="Include" />
           </e>

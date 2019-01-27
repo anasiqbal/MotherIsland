@@ -25,21 +25,19 @@ public class ShipController : MonoBehaviour
 	[Header("Waypoints Info")]
 	public int maxPointSelectionIndex;
 	public List<WaypointsInfo> spawnPoints;
+	
 
 	public event System.Action OnShipDestroyed;
 
 	List<WaypointsInfo> shuffledSpawnPoints;
+	private List<Ship> spawnedShips = new List<Ship>();
 
 	bool isActive;
 	WaypointsInfo pointInfo;
 
 	Vector3 targetHitPosition;
 
-	private void Start()
-	{
-		shuffledSpawnPoints = spawnPoints;
-		Initialize ();
-	}
+	
 
 	private void OnDisable()
 	{
@@ -51,6 +49,22 @@ public class ShipController : MonoBehaviour
 		isActive = true;
 		targetHitPosition = target.position + (Vector3.up * 2);
 		StartCoroutine (SpawnShip ());
+	}
+
+	public void StartAI()
+	{
+		shuffledSpawnPoints = spawnPoints;
+		Initialize ();
+		Debug.LogError("AI Started");
+	}
+	
+	public void RemoveOnScreenShips()
+	{
+		spawnedShips.Clear();
+		foreach (Transform children in shipParent)
+		{
+			Destroy(children.gameObject);
+		}
 	}
 
 	public void StopSpawning()
