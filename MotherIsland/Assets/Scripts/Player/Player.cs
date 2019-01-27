@@ -4,23 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DG.Tweening;
+
 [RequireComponent (typeof (WeaponController))]
 public class Player : LivingEntity
 {
 	#region Member Variables
 
 	[Header ("Visual")]
-	public Transform modelParent;
+	public Transform tower;
 	public GameObject prefab_PlayerModel;
+
+	public Image healthBar;
+
+	public float fortDestroyDuration = 4;
+	public GameObject destroyEffect;
 
 	[Header("Cross Hair Settings")]
 	public GameObject crossHair;
-	
+
 	// References
 	Camera mainCamera;
 	private Vector3 point = Vector3.zero;
 	WeaponController weaponController;
-	GameObject instantiatedPlayer;
 
 	#endregion
 
@@ -33,7 +39,6 @@ public class Player : LivingEntity
 		weaponController = GetComponent<WeaponController> ();
 		//SetupPlayerModel ();
 	}
-	
 
 	void Update()
 	{
@@ -60,27 +65,27 @@ public class Player : LivingEntity
 		}
 	}
 
-
 	#endregion
-	
+
 	#region Inherited Methods
+
+	public override void TakeDamage(float damage)
+	{
+		base.TakeDamage(damage);
+		healthBar.fillAmount = health / startingHealth;
+	}
 
 	protected override void Die()
 	{
-		base.Die ();
+		base.Die();
+		destroyEffect.SetActive(true);
+		tower.DOMoveY(-6, fortDestroyDuration).SetAutoKill(true).OnComplete(() =>
+		{
+			destroyEffect.SetActive(false);
+		}).Play();
 
+		mainCamera.DOShakePosition(fortDestroyDuration, 0.5f, 40, fadeOut: false);
 	}
 
-	#endregion
-
-	#region Helper Methods
-	
-	void SetupPlayerModel()
-	{
-		instantiatedPlayer = Instantiate (prefab_PlayerModel, modelParent);
-		instantiatedPlayer.transform.localScale = Vector3.one;
-		instantiatedPlayer.transform.localPosition = new Vector3 (0, 1, 0);
+		#endregion
 	}
-
-	#endregion
-}

@@ -527,7 +527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipedWeapon: {fileID: 114838238039668674}
-  muzzleVelocity: 0
 --- !u!114 &114838238039668674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -542,6 +541,7 @@ MonoBehaviour:
   muzzle: {fileID: 4077293204918818}
   projectile: {fileID: 114015977889240264, guid: 69c28d0f29322924c86e487813862e94,
     type: 2}
+  muzzelFlash: {fileID: 0}
   timeBetweenShots: 1
   muzzleVelocity: 20
   projectilePath: 1
