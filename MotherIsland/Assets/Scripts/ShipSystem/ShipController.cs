@@ -18,16 +18,59 @@ public class ShipController : MonoBehaviour
 	public Transform target;
 
 	public Transform shipParent;
-	public Ship shipPrefab;
-
-	public float shipSpawnDelay = 1;
+	public Ship[] shipPrefab;
 
 	[Header("Waypoints Info")]
 	public int maxPointSelectionIndex;
 	public List<WaypointsInfo> spawnPoints;
-	
 
-	public event System.Action OnShipDestroyed;
+	public static event System.Action OnShipDestroyed;
+
+	[Header("Difficulty")]
+	int difficultyIndex = 0;
+	float ShipSpawnDelay {
+		get
+		{
+			return maxShipSpawnDelay - ((maxShipSpawnDelay - minShipSpawnDelay) * (difficultyIndex / 100f));
+		}
+	}
+	public float minShipSpawnDelay = 2;
+	public float maxShipSpawnDelay = 4;
+	int StartShipSelectionIndex {
+		get
+		{
+			if (difficultyIndex >= 20)
+			{
+				return 1;
+			}
+			else if (difficultyIndex >= 40)
+			{
+				return 2;
+			}
+			else return 0;
+			//return 1;
+		}
+	}
+	int EndShipSelectionIndex {
+		get
+		{
+			if (difficultyIndex >= 10)
+			{
+				return 1;
+			}
+			else if (difficultyIndex >= 30)
+			{
+				return 2;
+			}
+			else if (difficultyIndex >= 50)
+			{
+				return 3;
+			}
+			else return 0;
+
+			//return 3;
+		}
+	}
 
 	List<WaypointsInfo> shuffledSpawnPoints;
 	private List<Ship> spawnedShips = new List<Ship>();
@@ -36,7 +79,7 @@ public class ShipController : MonoBehaviour
 	WaypointsInfo pointInfo;
 
 	Vector3 targetHitPosition;
-	
+
 	//References
 	private AudioSource audioSource;
 
@@ -58,6 +101,9 @@ public class ShipController : MonoBehaviour
 	{
 		isActive = true;
 		targetHitPosition = target.position + (Vector3.up * 2);
+
+		difficultyIndex = 0;
+
 		StartCoroutine (SpawnShip ());
 	}
 
@@ -65,9 +111,8 @@ public class ShipController : MonoBehaviour
 	{
 		shuffledSpawnPoints = spawnPoints;
 		Initialize ();
-		Debug.LogError("AI Started");
 	}
-	
+
 	public void RemoveOnScreenShips()
 	{
 		spawnedShips.Clear();
@@ -89,7 +134,9 @@ public class ShipController : MonoBehaviour
 			int waypointIndex = Random.Range (0, maxPointSelectionIndex);
 			pointInfo = shuffledSpawnPoints [waypointIndex];
 
-			Ship spawnedShip = Instantiate (shipPrefab, pointInfo.StartingPoint.position, Quaternion.identity, shipParent);
+			int shipIndex = Random.Range(StartShipSelectionIndex, EndShipSelectionIndex + 1);
+
+			Ship spawnedShip = Instantiate (shipPrefab[shipIndex], pointInfo.StartingPoint.position, Quaternion.identity, shipParent);
 			spawnedShip.Initialize (pointInfo, targetHitPosition);
 			audioSource.PlayOneShot(shipSpawn);
 			spawnedShip.OnDeath += SpawnedShip_OnDeath;
@@ -97,7 +144,7 @@ public class ShipController : MonoBehaviour
 			shuffledSpawnPoints.RemoveAt (waypointIndex);
 			shuffledSpawnPoints.Add (pointInfo);
 
-			yield return new WaitForSeconds (shipSpawnDelay);
+			yield return new WaitForSeconds (ShipSpawnDelay);
 		}
 	}
 
@@ -105,5 +152,7 @@ public class ShipController : MonoBehaviour
 	{
 		if (OnShipDestroyed != null)
 			OnShipDestroyed ();
+
+		difficultyIndex = (difficultyIndex + 1) % 100;
 	}
 }

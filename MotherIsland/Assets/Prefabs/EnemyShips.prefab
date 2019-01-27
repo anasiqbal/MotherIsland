@@ -53,9 +53,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   shipParent: {fileID: 4326015644567960}
-  shipPrefab: {fileID: 114968224034991834, guid: 74c366085acaeeb478f7909fdf25ee1c,
-    type: 2}
-  shipSpawnDelay: 4
+  shipPrefab:
+  - {fileID: 114968224034991834, guid: 74c366085acaeeb478f7909fdf25ee1c, type: 2}
+  - {fileID: 114363221069573496, guid: 220b0462f53f9184baef3848ce38182d, type: 2}
+  - {fileID: 114968224034991834, guid: b423d750e2f56d149b4ed5abd28bb668, type: 2}
+  - {fileID: 114363221069573496, guid: eee0eceaa3bb8944ea84e98408b87c42, type: 2}
   maxPointSelectionIndex: 7
   spawnPoints:
   - waypoints:
@@ -106,3 +108,5 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+  minShipSpawnDelay: 2
+  maxShipSpawnDelay: 4
