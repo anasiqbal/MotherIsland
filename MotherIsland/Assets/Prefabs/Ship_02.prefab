@@ -1620,7 +1620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 8
   speed: 4
-  stopingDistance: 1.5
+  stopingDistance: 1.75
   rotateDuration: 1
   healthBar: {fileID: 114048843880929264}
   sinkDuration: 0.75

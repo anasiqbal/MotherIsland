@@ -11,7 +11,6 @@ public class Player : LivingEntity
 {
 	#region Member Variables
 
-	[Header ("Visual")]
 	public Transform tower;
 	public GameObject prefab_PlayerModel;
 
@@ -19,6 +18,8 @@ public class Player : LivingEntity
 
 	public float fortDestroyDuration = 4;
 	public GameObject destroyEffect;
+
+	public Vector3 originalTowerPosition;
 
 	[Header("Cross Hair Settings")]
 	public GameObject crossHair;
@@ -83,6 +84,13 @@ public class Player : LivingEntity
 
 	#region Inherited Methods
 
+	public override void Initialize()
+	{
+		base.Initialize();
+
+		tower.position = originalTowerPosition;
+	}
+
 	public override void TakeDamage(float damage)
 	{
 		base.TakeDamage(damage);
@@ -99,12 +107,11 @@ public class Player : LivingEntity
 			Gamemanager.Manager.TransitionGameState(Gamemanager.States.GAMEOVER);
 		}).Play();
 		mainCamera.DOShakePosition(fortDestroyDuration, 0.5f, 40, fadeOut: false);
-		
+
 		//Sound Effect.
 		GameObject audio = new GameObject("Structure Destroyed Sound");
 		AudioSource source = audio.AddComponent<AudioSource>();
 		source.PlayOneShot(structureDestroyed);
-
 	}
 
 		#endregion

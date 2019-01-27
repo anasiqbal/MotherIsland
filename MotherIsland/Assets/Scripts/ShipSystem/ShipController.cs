@@ -104,13 +104,9 @@ public class ShipController : MonoBehaviour
 
 		difficultyIndex = 0;
 
-		StartCoroutine (SpawnShip ());
-	}
-
-	public void StartAI()
-	{
 		shuffledSpawnPoints = spawnPoints;
-		Initialize ();
+
+		StartCoroutine (SpawnShip ());
 	}
 
 	public void RemoveOnScreenShips()
@@ -125,6 +121,12 @@ public class ShipController : MonoBehaviour
 	public void StopSpawning()
 	{
 		isActive = false;
+
+		for(int i = 0; i < spawnedShips.Count; i++)
+		{
+			if (spawnedShips[i] != null)
+				spawnedShips[i].StopAttack();
+		}
 	}
 
 	IEnumerator SpawnShip()
