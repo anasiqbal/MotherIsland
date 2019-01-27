@@ -29,6 +29,8 @@ public class Ship : LivingEntity
 	int targetWaypoint;
 	Vector3 direction;
 
+	bool isPlayerDead = false;
+
 	bool hasReachedDestination = false;
 	float startTime;
 
@@ -96,7 +98,7 @@ public class Ship : LivingEntity
 	{
 		base.TakeDamage (damage);
 
-		healthBar.fillAmount = health;
+		healthBar.fillAmount = health / startingHealth;
 		if(health/ startingHealth < 0.3f)
 		{
 			healthBar.color = Color.red;
@@ -115,6 +117,11 @@ public class Ship : LivingEntity
 		{
 			Destroy (gameObject);
 		}).Play ();
+	}
+
+	public void StopAttack()
+	{
+		isPlayerDead = true;
 	}
 
 	IEnumerator PrepareToAttack()
@@ -143,7 +150,7 @@ public class Ship : LivingEntity
 	IEnumerator Attack()
 	{
 		Vector3 force = CalculateAngle(targetHitPosition);
-		while (!IsDead)
+		while (!IsDead && !isPlayerDead)
 		{
 			Projectile instantiatedProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation);
 			instantiatedProjectile.ApplyForce(force);
