@@ -27,6 +27,9 @@ public class Player : LivingEntity
 	[Header("Audio Clips")] 
 	[SerializeField] private AudioClip structureDestroyed;
 
+	//Private variables
+	private float projectionSize;
+	
 	// References
 	Camera mainCamera;
 	private Vector3 point = Vector3.zero;
@@ -41,6 +44,7 @@ public class Player : LivingEntity
 
 		mainCamera = Camera.main;
 		weaponController = GetComponent<WeaponController> ();
+		mainCamera.orthographicSize = 15;
 		//SetupPlayerModel ();
 	}
 
@@ -64,8 +68,15 @@ public class Player : LivingEntity
 			crossHair.transform.position = point + (Vector3.up * 0.8f);
 
 			// Trigger weapon to shoot
-			if (Input.GetMouseButton (0))
+			if (Input.GetMouseButton(0))
+			{
 				weaponController.Shoot (point);
+				mainCamera.orthographicSize = 16;
+			}
+
+			mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 15f, Time.deltaTime * 2.5f);
+
+
 		}
 	}
 
