@@ -111,7 +111,7 @@ public class Ship : LivingEntity
 		GetComponent<Collider> ().enabled = false;
 		healthBar.gameObject.SetActive (false);
 
-		transform.DOMoveY (-1, sinkDuration).SetAutoKill (true).OnComplete(() =>
+		transform.DOMoveY (-2, sinkDuration).SetAutoKill (true).OnComplete(() =>
 		{
 			Destroy (gameObject);
 		}).Play ();

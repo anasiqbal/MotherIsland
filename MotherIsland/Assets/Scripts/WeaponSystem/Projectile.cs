@@ -8,6 +8,9 @@ public class Projectile : MonoBehaviour
 	public float damage = 5;
 
 	public float maxLifeTime = 6;
+
+	public GameObject explosionParticle;
+
 	Rigidbody rb;
 
 	private void Awake()
@@ -30,7 +33,20 @@ public class Projectile : MonoBehaviour
 		if (hitObject != null)
 		{
 			hitObject.TakeDamage (damage);
+
+			GameObject go = Instantiate(explosionParticle, transform.position, transform.rotation);
+			Destroy(go, 2);
 		}
+		else if(other.CompareTag("Water"))
+		{
+
+		}
+		else
+		{
+			GameObject go = Instantiate(explosionParticle, transform.position, transform.rotation);
+			Destroy(go, 2);
+		}
+
 
 		Destroy (gameObject);
 	}

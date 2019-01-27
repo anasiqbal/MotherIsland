@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour
 	public Transform muzzle;
 	public Projectile projectile;
 
+	public ParticleSystem muzzelFlash;
+
 	public float timeBetweenShots;	// in seconds
 	public float muzzleVelocity;
 
@@ -45,6 +47,7 @@ public class Weapon : MonoBehaviour
 
 			Projectile instantiatedProjectile = Instantiate (projectile, muzzle.position, muzzle.rotation);
 			instantiatedProjectile.ApplyForce (CalculateAngle (_target));
+			muzzelFlash.Play();
 		}
 	}
 

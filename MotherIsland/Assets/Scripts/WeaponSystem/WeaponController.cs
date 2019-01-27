@@ -5,10 +5,8 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
 	#region Member Variables
-	//public Transform weaponHold;
-	//public Weapon startingWeapon;
+
 	public Weapon equipedWeapon;
-	public float muzzleVelocity;
 
 	#endregion
 
