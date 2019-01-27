@@ -180,7 +180,11 @@ public class Gamemanager : MonoBehaviour {
 	{
 		creditsWindow.gameObject.SetActive(false);
 	}
-	
+
+	public void OnQuit()
+	{
+		Application.Quit();
+	}
 
 	#endregion
 
