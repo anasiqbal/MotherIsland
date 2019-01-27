@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 65716832252438210}
   - component: {fileID: 65224033159626394}
   m_Layer: 0
-  m_Name: Ship_02
+  m_Name: Ship_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,7 +439,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1303744146856734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.85}
+  m_LocalPosition: {x: 0, y: 1.602, z: 1.186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4493165471691910}
@@ -497,7 +497,7 @@ Transform:
   m_GameObject: {fileID: 1110940187954850}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4633292036923512}
   - {fileID: 4353865435825476}
@@ -1542,8 +1542,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4, y: 0.75, z: 1.25}
-  m_Center: {x: 0, y: 1.15, z: -0.975}
+  m_Size: {x: 0.3, y: 0.2, z: 0.6}
+  m_Center: {x: 0, y: 1, z: 3.05}
 --- !u!65 &65514886902946952
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1554,8 +1554,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.3, z: 0.4}
-  m_Center: {x: 0, y: 0.65, z: 1.8}
+  m_Size: {x: 2, y: 0.9, z: 1.7}
+  m_Center: {x: 0, y: 1.55, z: -1.4}
 --- !u!65 &65588487531670902
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1566,8 +1566,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4, y: 0.5, z: 3}
-  m_Center: {x: 0, y: 0.6, z: 0.1}
+  m_Size: {x: 2, y: 0.7, z: 4}
+  m_Center: {x: 0, y: 0.75, z: 0.05}
 --- !u!65 &65716832252438210
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1578,8 +1578,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.11, z: 0.4}
-  m_Center: {x: 0, y: 0.75, z: 2.2}
+  m_Size: {x: 1.3, y: 0.3, z: 0.7}
+  m_Center: {x: 0, y: 0.97, z: 2.4}
 --- !u!114 &114048843880929264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1618,8 +1618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0039fcb54d12d4b9d7b30f01718a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 8
-  speed: 4
+  startingHealth: 12
+  speed: 2
   stopingDistance: 1.5
   rotateDuration: 1
   healthBar: {fileID: 114048843880929264}
