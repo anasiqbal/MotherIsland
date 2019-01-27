@@ -32,6 +32,10 @@
           <e p="Player" t="Include">
             <e p="Player.cs" t="Include" />
           </e>
+          <e p="ShipSystem" t="Include">
+            <e p="Ship.cs" t="Include" />
+            <e p="ShipController.cs" t="Include" />
+          </e>
           <e p="Utils" t="Include">
             <e p="LookAtCamera.cs" t="Include" />
           </e>
