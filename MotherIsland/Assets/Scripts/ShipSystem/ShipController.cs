@@ -146,6 +146,8 @@ public class ShipController : MonoBehaviour
 			shuffledSpawnPoints.RemoveAt (waypointIndex);
 			shuffledSpawnPoints.Add (pointInfo);
 
+			spawnedShips.Add(spawnedShip);
+
 			yield return new WaitForSeconds (ShipSpawnDelay);
 		}
 	}

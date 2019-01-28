@@ -22,11 +22,17 @@ public class Weapon : MonoBehaviour
 
 	public ProjectilePath projectilePath = ProjectilePath.Average;
 
+	Camera mainCamera;
 	bool canShoot = true;
 	Vector3 targetPosition;
 
 	//UI References
 	public Image loading;
+
+	private void Awake()
+	{
+		mainCamera = Camera.main;
+	}
 
 	public void Shoot(Vector3 _target)
 	{
@@ -44,6 +50,8 @@ public class Weapon : MonoBehaviour
 				loading.gameObject.SetActive (false);
 				canShoot = true;
 			});
+
+			mainCamera.DOShakePosition(0.15f, new Vector3(0.7f, 0.4f, 0)).SetAutoKill(true).Play();
 
 			Projectile instantiatedProjectile = Instantiate (projectile, muzzle.position, muzzle.rotation);
 			instantiatedProjectile.ApplyForce (CalculateAngle (_target));
