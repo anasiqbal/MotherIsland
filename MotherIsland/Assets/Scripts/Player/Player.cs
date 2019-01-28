@@ -44,7 +44,7 @@ public class Player : LivingEntity
 
 		mainCamera = Camera.main;
 		weaponController = GetComponent<WeaponController> ();
-		mainCamera.orthographicSize = 15;
+		//mainCamera.orthographicSize = 15;
 		//SetupPlayerModel ();
 	}
 
@@ -71,12 +71,10 @@ public class Player : LivingEntity
 			if (Input.GetMouseButton(0))
 			{
 				weaponController.Shoot (point);
-				mainCamera.orthographicSize = 16;
+				//mainCamera.orthographicSize = 16;
 			}
 
-			mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 15f, Time.deltaTime * 2.5f);
-
-
+			//mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 15f, Time.deltaTime * 2.5f);
 		}
 	}
 

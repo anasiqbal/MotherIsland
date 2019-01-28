@@ -37,31 +37,30 @@ public class Gamemanager : MonoBehaviour {
 
 	[Header("Icons")] 
 	[SerializeField] private Sprite[] soundIcons;
-	 
+
 	//Private Variables
 	private static Gamemanager manager;
-	private int seconds;
+	private float seconds;
 	private States currentState;
 	private AudioSource audioSource;
-	
+
 	//Properties 
 	public static Gamemanager Manager{get { return manager; }}
 
 	#endregion
-	
-	
+
 	private void Awake()
 	{
 		 //Initialze Manager Instance.
 		manager = this;
-		
+
 		//Get References.
 		buttonClickSource = GetComponent<AudioSource>();
 		audioSource = GetComponent<AudioSource>();
-		
+
 		//Configure Audio Source.
-	   ConfigureSound();
-		
+		ConfigureSound();
+
 		//Set Game State.
 		TransitionGameState(States.MAINMENU);
 	}
@@ -70,7 +69,7 @@ public class Gamemanager : MonoBehaviour {
 	{
 		if (currentState == States.GAMEPLAY)
 		{
-			seconds += (int)Time.deltaTime;
+			seconds += Time.deltaTime;
 			var t = TimeSpan.FromSeconds(seconds);
 			time.text = string.Format("{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
 		}
@@ -101,15 +100,14 @@ public class Gamemanager : MonoBehaviour {
 				closeOpenMenus();
 				menus[(int)gamestate].gameObject.SetActive(true);
 				sruvivedTime.text = TimeSpan.FromSeconds(seconds).ToString();
+				shipController.StopSpawning();
 				break;
 			case States.RESTART:
 				closeOpenMenus();
-				menus[(int)States.GAMEPLAY].gameObject.SetActive(true);
-				playerController.Initialize();
-				shipController.Initialize();
+				shipController.RemoveOnScreenShips();
+				TransitionGameState(States.GAMEPLAY);
 				break;
 			case States.RESUME:
-				shipController.RemoveOnScreenShips();
 				closeOpenMenus();
 				menus[(int)States.GAMEPLAY].gameObject.SetActive(true);
 				Time.timeScale = 1f;
